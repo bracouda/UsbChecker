@@ -1,6 +1,7 @@
 package org.usb;
 
-import org.usb.display.Display;
+import org.usb.display.DisplayFactory;
+import org.usb.display.IDisplay;
 import org.usb.error.UsbCountException;
 import org.usb.error.UsbDoubleException;
 import org.usb.error.UsbWhiteListException;
@@ -11,9 +12,11 @@ import java.util.TimerTask;
 public class UsbTask extends TimerTask {
 
     private final PersonnalSettings personnalSettings;
+    private final IDisplay display;
 
     UsbTask() {
         personnalSettings = new PersonnalSettings();
+        display = DisplayFactory.getDisplay();
     }
 
     @Override
@@ -25,11 +28,11 @@ public class UsbTask extends TimerTask {
             usbOperator.checkWhiteList();
             usbOperator.checkDoublon();
         } catch (UsbCountException e) {
-            Display.showError("Usb count error !",e.getMessage());
+            display.showError("Usb count error !",e.getMessage());
         } catch (UsbDoubleException e) {
-            Display.showError("Usb duplicate error !",e.getMessage());
+            display.showError("Usb duplicate error !",e.getMessage());
         } catch (UsbWhiteListException e) {
-            Display.showError("Usb whiteList error !",e.getMessage());
+            display.showError("Usb whiteList error !",e.getMessage());
         }
 
     }

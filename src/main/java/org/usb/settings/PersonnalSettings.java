@@ -2,7 +2,8 @@ package org.usb.settings;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.usb.display.Display;
+import org.usb.display.DisplayFactory;
+import org.usb.display.IDisplay;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 public class PersonnalSettings {
     private static final String PATH = System.getProperty("user.home")+ File.separator+"security"+File.separator;
     private static final Logger logger = LogManager.getLogger(PersonnalSettings.class);
+    private final IDisplay display = DisplayFactory.getDisplay();
 
     private Properties properties;
     private PersonnalSettingsSource lastPersonnalSettingsSource;
@@ -38,7 +40,7 @@ public class PersonnalSettings {
             }
         }
         if(actualPersonnalSettingsSource!=lastPersonnalSettingsSource){
-            Display.displayInformation("Personnal settings has been initialized with "+actualPersonnalSettingsSource);
+            display.displayInformation("Personnal settings has been initialized with "+actualPersonnalSettingsSource);
             lastPersonnalSettingsSource = actualPersonnalSettingsSource;
         }
     }
